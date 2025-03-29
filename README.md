@@ -15,15 +15,14 @@ docker build -t myimage .
 pip install -r requirements.txt
 ````
 
-2. Start the Docker mycontainer and redis
+2. Start the Docker mycontainer
 
 ````
-docker run --name mycontainer -p 80:80 myimage 
-&& docker run -p 6379:6379 -it redis/redis-stack:latest
+docker run --name mycontainer -p 8080:80 myimage
 ````
 local swagger should appear >>> http://localhost:8080/docs or http://127.0.0.1:8080/docs
 
-
+# start local by uvicorn
 uvicorn app.main:app --reload
 
 # Dploy to Azure
