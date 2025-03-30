@@ -36,6 +36,15 @@ class RedisClient:
         except Exception as e:
             logging.error(f"Error setting key {key}: {e}")
             raise e
+        
+    def hashes_set_assignment(self, key, id, value):
+        try:
+            res = self.redis_client.hset(key, id, value)
+            self.redis_client.expire(key, 1800)
+            return res
+        except Exception as e:
+            logging.error(f"Error setting key {key}: {e}")
+            raise e
 
     def get_by_id(self, key, id):
         try:
@@ -54,7 +63,7 @@ class RedisClient:
         except Exception as e:
             logging.error(f"Error setting key {key}: {e}")
             raise e
-        
+
     def delete(self, key):
         try:
             res = self.redis_client.delete(key)

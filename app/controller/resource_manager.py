@@ -88,19 +88,17 @@ class ResourceManager:
         for item in process:
             id = item["AreaID"]
             item = json.dumps(item)
-            self.redis_client.hashes_set(assignments_key, id, item)
+            self.redis_client.hashes_set_assignment(assignments_key, id, item)
 
         return process
 
     def process_assignment(
-        self, assignments_key: str, ares: list, trucks: list
+        self, ares: list, trucks: list
     ) -> List[AssignmentModel]:
         # assign = self.redis_client.hashes_get(assignments_key)
         ares.sort(key=lambda x: x["UrgencyLevel"], reverse=True)
 
         assignments = []
-        under_resourced_trucks = {}
-        under_time_trucks = {}
         used_trucks = set()
 
         for area in ares:
