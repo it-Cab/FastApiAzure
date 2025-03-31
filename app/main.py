@@ -99,8 +99,8 @@ async def add_assignments():
 
 
 @app.get("/api/assignments")
-async def get_assignments() -> list[TruckModel]:
-    assign = resource_manager.get_trucks(assignment_key)
+async def get_assignments():
+    assign = resource_manager.get_assignments(assignment_key)
     if assign:
         body = {"assign: ": assign}
         return JSONResponse(status_code=200, content=body)
@@ -129,9 +129,9 @@ async def delete(key: str, id: str):
         status_code=200 if response else 500,
         content={
             "message": (
-                f"Delete {assignment_key} success"
+                f"Delete {key} success"
                 if response
-                else f"Delete fail no {assignment_key} in redis"
+                else f"Delete fail no {key} in redis"
             )
         },
     )

@@ -35,6 +35,8 @@ class ResourceManager:
 
             set_res.append(res)
 
+        print(all(set_res))
+
         if all(set_res):
             logging.info("Store Area to Redis success")
             return True
@@ -76,7 +78,7 @@ class ResourceManager:
         area = self.redis_client.hashes_get(area_key)
         truck = self.redis_client.hashes_get(truck_key)
 
-        decoded_ares = [
+        decoded_areas = [
             json.loads(v.decode()) if isinstance(v, bytes) else v
             for k, v in area.items()
         ]
@@ -84,7 +86,7 @@ class ResourceManager:
             json.loads(v.decode()) if isinstance(v, bytes) else v
             for k, v in truck.items()
         ]
-        process = self.process_assignment(assignments_key, decoded_ares, decoded_truck)
+        process = self.process_assignment(decoded_areas, decoded_truck)
         for item in process:
             id = item["AreaID"]
             item = json.dumps(item)

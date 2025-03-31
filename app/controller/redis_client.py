@@ -1,13 +1,16 @@
 import redis
 import os
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class RedisClient:
     def __init__(self, ssl=True):
-        self.host = "redis-fastapi.redis.cache.windows.net"
+        self.host = os.getenv("HOST")
         self.port = 6380
-        self.password = "ESkfRmdDYGRTMj9MFWvMoMKqQjGAunkReAzCaN9YlSU="
+        self.password = os.getenv("PASSWORD")
         self.ssl = ssl
 
         try:
